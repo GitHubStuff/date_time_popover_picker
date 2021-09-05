@@ -1,0 +1,30 @@
+name: date_timer_picker_widget
+description: Template for Flutter Package project.
+version: 0.0.1
+author: Steven Smith
+homepage: http://www.icodeforyou.com
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.13.4 <3.0.0" #Dart SDK 4-SEP-2021
+  flutter: ">=2.2.3"
+
+dependencies:
+  cupertino_icons: ^1.0.3
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^7.1.0
+  flutter_classes:
+    git:
+      url: https://github.com/GitHubStuff/flutter_classes.git
+  flutter_modular: ^3.4.1+1
+  intl: ^0.17.0
+  theme_manager:
+    git:
+      url: https://github.com/GitHubStuff/theme_manager.git
+
+dev_dependencies:
+  test: ^1.17.12
+
+flutter:
+  uses-material-design: true
