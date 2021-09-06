@@ -2,10 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager.dart';
 
-const EdgeInsets padding = EdgeInsets.all(1.0);
-const double fontSize = 20.0;
-const pickerExtent = 38.0;
-const Size yearSize = Size(100.0, pickerExtent);
+const delegateExtent = pickerExtent * 0.5;
+const fontSize = 20.0;
+const baseYear = 1700;
+const yearSpan = 400;
+const padding = EdgeInsets.all(1.0);
+const pickerExtent = 28.0;
+const yearColumnWidth = 75.0;
+const yearSize = Size(100.0, pickerExtent);
+const monthSpan = 35; // 3 x 12 months to offer wrapping scroll
+const monthColumnWidth = 50.0;
 
 TextStyle textStyle({required BuildContext context, TextStyle? textStyle}) => (textStyle ?? TextStyle()).copyWith(
       color: ThemeManager.color(characterColors, context: context),

@@ -1,5 +1,6 @@
 library date_timer_picker_widget;
 
+import 'package:date_timer_picker_widget/source/date_time_classes/month_deletate.dart';
 import 'package:date_timer_picker_widget/source/date_time_classes/year_delegate.dart';
 import 'package:date_timer_picker_widget/source/widgets/picker_scrolling_widget.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,12 @@ class DateTimePickerWidget extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    return PickerScrollingWidget(pickerDelegate: YearDelegate());
+    return Row(
+      children: [
+        PickerScrollingWidget(pickerDelegate: MonthDelegate()),
+        PickerScrollingWidget(pickerDelegate: YearDelegate()),
+      ],
+    );
   }
 }
 
