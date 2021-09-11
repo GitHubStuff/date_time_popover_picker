@@ -2,12 +2,13 @@ library date_timer_picker_widget;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 import 'source/constants.dart' as K;
 import 'source/cubit/date_time_cubit.dart';
-import 'source/widgets/month_widget.dart';
+import 'source/widgets/picker_widget.dart';
 
 typedef void PickerCallback(DateTime? dateTime);
 
@@ -17,15 +18,24 @@ class DateTimePickerWidget extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    return BlocBuilder<DateTimeCubit, DateTimeState>(builder: (context, state) {
     final dtc = Modular.get<DateTimeCubit>();
-      return Row(
-        children: [
-          dtc.yearWidget,
-          MonthWidget(),
-        ],
-      );
-    });
+    return BlocBuilder<DateTimeCubit, DateTimeState>(
+        bloc: dtc,
+        builder: (context, state) {
+          return Row(
+            children: [
+              PickerWidget(
+                element: DateTimeElement.year,
+              ),
+              PickerWidget(
+                element: DateTimeElement.month,
+              ),
+              PickerWidget(
+                element: DateTimeElement.day,
+              ),
+            ],
+          );
+        });
   }
 }
 
