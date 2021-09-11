@@ -1,29 +1,31 @@
 library date_timer_picker_widget;
 
-import 'package:date_timer_picker_widget/source/date_time_classes/month_deletate.dart';
-import 'package:date_timer_picker_widget/source/date_time_classes/year_delegate.dart';
-import 'package:date_timer_picker_widget/source/widgets/picker_scrolling_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 import 'source/constants.dart' as K;
-
-export 'source/widgets/picker_text.dart';
+import 'source/cubit/date_time_cubit.dart';
+import 'source/widgets/month_widget.dart';
 
 typedef void PickerCallback(DateTime? dateTime);
 
 class DateTimePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  const DateTimePickerWidget({required this.pickerCallback});
+  DateTimePickerWidget({required this.pickerCallback});
 
   @override
   build(BuildContext context) {
-    return Row(
-      children: [
-        PickerScrollingWidget(pickerDelegate: MonthDelegate()),
-        PickerScrollingWidget(pickerDelegate: YearDelegate()),
-      ],
-    );
+    return BlocBuilder<DateTimeCubit, DateTimeState>(builder: (context, state) {
+    final dtc = Modular.get<DateTimeCubit>();
+      return Row(
+        children: [
+          dtc.yearWidget,
+          MonthWidget(),
+        ],
+      );
+    });
   }
 }
 

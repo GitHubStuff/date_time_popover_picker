@@ -7,7 +7,7 @@ const int _BaseYear = 1700;
 class PickerDateTimeManager {
   late DateTime _dateTime;
   PickerDateTimeManager({required DateTime initialDateTime}) {
-    _dateTime = initialDateTime.round();
+    _dateTime = initialDateTime.round(); /// Remove milli & micro seconds
   }
 
   DateTime get dateTime => _dateTime;
