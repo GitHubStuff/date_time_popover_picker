@@ -7,3 +7,5 @@ class DateTimeInitial extends DateTimeState {
   final DateTime dateTime;
   DateTimeInitial({required this.dateTime});
 }
+
+class DayChanged extends DateTimeState {}

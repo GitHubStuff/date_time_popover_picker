@@ -8,6 +8,7 @@ import 'package:theme_manager/theme_manager.dart';
 
 import 'source/constants.dart' as K;
 import 'source/cubit/date_time_cubit.dart';
+import 'source/widgets/day_widget.dart';
 import 'source/widgets/picker_widget.dart';
 
 typedef void PickerCallback(DateTime? dateTime);
@@ -19,23 +20,25 @@ class DateTimePickerWidget extends StatelessWidget {
   @override
   build(BuildContext context) {
     final dtc = Modular.get<DateTimeCubit>();
-    return BlocBuilder<DateTimeCubit, DateTimeState>(
-        bloc: dtc,
-        builder: (context, state) {
-          return Row(
-            children: [
-              PickerWidget(
-                element: DateTimeElement.year,
-              ),
-              PickerWidget(
-                element: DateTimeElement.month,
-              ),
-              PickerWidget(
+    return Row(
+      children: [
+        PickerWidget(
+          element: DateTimeElement.year,
+        ),
+        PickerWidget(
+          element: DateTimeElement.month,
+        ),
+        BlocBuilder<DateTimeCubit, DateTimeState>(
+            bloc: dtc,
+            builder: (context, state) {
+              debugPrint('STATE: ${state.toString()}');
+              return DayWidget(
+                key: UniqueKey(),
                 element: DateTimeElement.day,
-              ),
-            ],
-          );
-        });
+              );
+            })
+      ],
+    );
   }
 }
 

@@ -7,14 +7,14 @@ import 'package:theme_manager/theme_manager.dart';
 import '../constants.dart' as K;
 import 'list_wheel.dart';
 
-class PickerWidget extends StatefulWidget {
+class DayWidget extends StatefulWidget {
   final DateTimeElement element;
-  const PickerWidget({required this.element});
+  const DayWidget({Key? key, required this.element}) : super(key: key);
 
-  _PickerWidget createState() => _PickerWidget();
+  _DayWidget createState() => _DayWidget();
 }
 
-class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
+class _DayWidget extends ObservingStatefulWidget<DayWidget> {
   late FixedExtentScrollController scrollController;
   late DateTimeCubit dateTimeCubit;
 
@@ -29,9 +29,6 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   @override
   void afterFirstLayout(BuildContext buildContext) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      scrollController.addListener(() {
-        //debugPrint('Scrolling');
-      });
       scrollController.position.isScrollingNotifier.addListener(() {
         if (!scrollController.position.isScrollingNotifier.value) {
           final pos = scrollController.selectedItem;

@@ -41,15 +41,6 @@ Widget? pickerWidget({required int atIndex, required DateTimeElement forElement,
   }
 }
 
-int pickerSpan(DateTimeElement element) {
-  switch (element) {
-    case DateTimeElement.year:
-      return yearSpan;
-    default:
-      throw FlutterError('No span for ${element.toString()}');
-  }
-}
-
 double pickerWidth(DateTimeElement element) {
   switch (element) {
     case DateTimeElement.year:
