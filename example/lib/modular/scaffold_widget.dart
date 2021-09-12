@@ -1,4 +1,4 @@
-import 'package:date_timer_picker_widget/date_timer_picker_widget.dart';
+import 'package:date_timer_picker_widget/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:theme_manager/theme_manager.dart';
@@ -38,7 +38,7 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(AppLocalizations.of(context)!.helloWorld), //Example of localization
-          DateTimePickerWidget(
+          DatePickerWidget(
             pickerCallback: (DateTime? dateTime) {},
           ),
         ],

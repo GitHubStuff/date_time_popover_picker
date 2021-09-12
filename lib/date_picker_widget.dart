@@ -11,11 +11,13 @@ import 'source/cubit/date_time_cubit.dart';
 import 'source/widgets/day_widget.dart';
 import 'source/widgets/picker_widget.dart';
 
+export 'source/cubit/date_time_cubit.dart';
+
 typedef void PickerCallback(DateTime? dateTime);
 
-class DateTimePickerWidget extends StatelessWidget {
+class DatePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  DateTimePickerWidget({required this.pickerCallback});
+  DatePickerWidget({required this.pickerCallback});
 
   @override
   build(BuildContext context) {
@@ -23,20 +25,19 @@ class DateTimePickerWidget extends StatelessWidget {
     return Row(
       children: [
         PickerWidget(
-          element: DateTimeElement.year,
-        ),
-        PickerWidget(
           element: DateTimeElement.month,
         ),
         BlocBuilder<DateTimeCubit, DateTimeState>(
             bloc: dtc,
             builder: (context, state) {
-              debugPrint('STATE: ${state.toString()}');
               return DayWidget(
                 key: UniqueKey(),
                 element: DateTimeElement.day,
               );
-            })
+            }),
+        PickerWidget(
+          element: DateTimeElement.year,
+        ),
       ],
     );
   }

@@ -1,5 +1,4 @@
-import 'package:date_timer_picker_widget/date_timer_picker_widget.dart';
-import 'package:date_timer_picker_widget/source/cubit/date_time_cubit.dart';
+import 'package:date_timer_picker_widget/date_picker_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'scaffold_widget.dart';
