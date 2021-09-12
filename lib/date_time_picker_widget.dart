@@ -1,26 +1,31 @@
 library date_timer_picker_widget;
 
-import 'package:date_timer_picker_widget/source/year/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager.dart';
 
+import 'source/buttons/date_time_toggle.dart';
+import 'source/buttons/set_button.dart';
 import 'source/constants.dart' as K;
-import 'source/time/time_picker_widget.dart';
+import 'source/widgets/date_picker_stack_widget.dart';
 
+export 'source/constants.dart';
 export 'source/cubit/date_time_cubit.dart';
-
-typedef void PickerCallback(DateTime? dateTime);
 
 class DateTimePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
+
   const DateTimePickerWidget({required this.pickerCallback});
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      DatePickerWidget(pickerCallback: pickerCallback),
-      TimePickerWidget(pickerCallback: pickerCallback),
-    ]);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SetButton(),
+        DateTimeToggle(),
+        DateTimePickerStackWidget(pickerCallback: pickerCallback),
+      ],
+    );
   }
 }
 

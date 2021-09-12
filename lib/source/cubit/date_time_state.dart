@@ -9,3 +9,8 @@ class DateTimeInitial extends DateTimeState {
 }
 
 class DayChanged extends DateTimeState {}
+
+class PickerTypeChanged extends DateTimeState {
+  final K.DateTimeItem dateTimeItem;
+  PickerTypeChanged({required this.dateTimeItem});
+}

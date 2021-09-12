@@ -1,4 +1,4 @@
-import 'package:date_timer_picker_widget/date_picker_widget.dart';
+import 'package:date_timer_picker_widget/date_time_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:theme_manager/theme_manager.dart';

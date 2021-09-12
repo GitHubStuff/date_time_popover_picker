@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-export '../../date_picker_widget.dart';
-import '../../date_picker_widget.dart';
+import '../../date_time_picker_widget.dart';
+import '../widgets/date_picker_stack_widget.dart';
 import '../../source/widgets/picker_widget.dart';
+
+export '../widgets/date_picker_stack_widget.dart';
 
 class DatePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
@@ -14,7 +16,9 @@ class DatePickerWidget extends StatelessWidget {
   @override
   build(BuildContext context) {
     final dtc = Modular.get<DateTimeCubit>();
+    UniqueKey dayKey = UniqueKey();
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         PickerWidget(
           element: DateTimeElement.month,
@@ -22,8 +26,9 @@ class DatePickerWidget extends StatelessWidget {
         BlocBuilder<DateTimeCubit, DateTimeState>(
             bloc: dtc,
             builder: (context, state) {
+              if (state is DayChanged) dayKey = UniqueKey();
               return PickerWidget(
-                key: UniqueKey(),
+                key: dayKey,
                 element: DateTimeElement.day,
               );
             }),

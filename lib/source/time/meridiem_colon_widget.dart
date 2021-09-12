@@ -1,19 +1,19 @@
-import 'package:date_timer_picker_widget/source/cubit/date_time_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
+import '../../date_time_picker_widget.dart';
 import '../constants.dart' as K;
 
-class PickerWidget extends StatefulWidget {
-  final DateTimeElement element;
-  const PickerWidget({Key? key, required this.element}) : super(key: key);
+class MeridiemColonWidget extends StatefulWidget {
+  final K.TimeSeparator timeSeparators;
+  const MeridiemColonWidget({Key? key, required this.timeSeparators}) : super(key: key);
 
-  _PickerWidget createState() => _PickerWidget();
+  _MeridiemColonWidget createState() => _MeridiemColonWidget();
 }
 
-class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
+class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> {
   late FixedExtentScrollController scrollController;
   late DateTimeCubit dateTimeCubit;
 
@@ -21,17 +21,20 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   void initState() {
     super.initState();
     dateTimeCubit = Modular.get<DateTimeCubit>();
-    final int firstIndex = dateTimeCubit.initialPickerValue(widget.element);
+    final int firstIndex = (widget.timeSeparators == K.TimeSeparator.colon) ? K.colonIndex : dateTimeCubit.initialMeridiemIndexValue();
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
   }
 
   @override
   void afterFirstLayout(BuildContext buildContext) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      scrollController.addListener(() {
+        //debugPrint('Scrolling');
+      });
       scrollController.position.isScrollingNotifier.addListener(() {
         if (!scrollController.position.isScrollingNotifier.value) {
           final pos = scrollController.selectedItem;
-          dateTimeCubit.setElement(widget.element, toIndex: pos);
+          dateTimeCubit.setMeridiem(seperatorType: widget.timeSeparators, index: pos);
         } else {}
       });
     });
@@ -41,23 +44,17 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   Widget build(BuildContext context) {
     final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
     return Container(
-      color: K.pickerBackgroundColor(brightness, widget.element),
+      color: K.pickerBackgroundColor(brightness, DateTimeElement.hour),
       height: K.heightPicker,
-      width: K.pickerWidth(widget.element),
+      width: widget.timeSeparators == K.TimeSeparator.colon ? K.widthColon : K.widthMeridiem,
       child: Center(
         child: ListWheelScrollView.useDelegate(
-          useMagnifier: true,
-          magnification: 1.1,
           itemExtent: K.pickerExtent,
           physics: FixedExtentScrollPhysics(),
           controller: scrollController,
           childDelegate: ListWheelChildBuilderDelegate(
             builder: (context, int index) {
-              return K.pickerWidget(
-                atIndex: index,
-                forElement: widget.element,
-                dateTime: dateTimeCubit.dateTime,
-              );
+              return widget.timeSeparators == K.TimeSeparator.colon ? K.pickerWidget(atIndex: index, forElement: null, dateTime: null) : K.merdianWidget(atIndex: index);
             },
           ),
         ),

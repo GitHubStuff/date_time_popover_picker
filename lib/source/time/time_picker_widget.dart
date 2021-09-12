@@ -1,32 +1,33 @@
-import 'package:date_timer_picker_widget/source/time/colon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 
-import '../../date_picker_widget.dart';
+import '../widgets/date_picker_stack_widget.dart';
+import '../../source/constants.dart';
+import '../../source/time/meridiem_colon_widget.dart';
 import '../../source/widgets/picker_widget.dart';
 
-export '../../date_picker_widget.dart';
+export '../widgets/date_picker_stack_widget.dart';
 
 class TimePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  TimePickerWidget({required this.pickerCallback});
+  final bool includeSeconds;
+  TimePickerWidget({required this.pickerCallback, this.includeSeconds = true});
 
   @override
   build(BuildContext context) {
+    List<Widget> items = [
+      PickerWidget(element: DateTimeElement.hour),
+      MeridiemColonWidget(timeSeparators: TimeSeparator.colon),
+      PickerWidget(element: DateTimeElement.minute),
+    ];
+    if (includeSeconds) {
+      items.add(MeridiemColonWidget(timeSeparators: TimeSeparator.colon));
+      items.add(PickerWidget(element: DateTimeElement.second));
+    }
+    items.add(MeridiemColonWidget(timeSeparators: TimeSeparator.meridiem));
     return Row(
-      children: [
-        PickerWidget(
-          element: DateTimeElement.hour,
-        ),
-        ColonWidget(),
-        PickerWidget(
-          element: DateTimeElement.minute,
-        ),
-        ColonWidget(),
-        PickerWidget(
-          element: DateTimeElement.second,
-        ),
-      ],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: items,
     );
   }
 }

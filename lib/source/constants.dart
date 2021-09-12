@@ -4,38 +4,87 @@ import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_manager/theme_manager.dart';
 
+enum Meridiem {
+  am,
+  pm,
+}
+
+enum TimeSeparator {
+  colon,
+  meridiem,
+}
+
+enum DateTimeItem {
+  date,
+  time,
+}
+
+const amPmDemarkHour = 12;
+const colonIndex = 0;
+const midnightHour = 0;
+const secondsInMinute = 60;
+const minutesInHour = 60;
+ThemeColors defaultDateBackgroundColors = ThemeColors(
+  dark: Colors.green.shade900,
+  light: Colors.white70,
+);
+ThemeColors defaultSetButtonBackgroundColors = ThemeColors(
+  dark: Colors.green.shade900,
+  light: Colors.white70,
+);
+ThemeColors defaultTimeBackgroundColors = ThemeColors(dark: Colors.green.shade500, light: Colors.white54);
+
+ThemeColors defaultTextBackgroundColors = ThemeColors(
+  dark: Colors.yellow.shade800,
+  light: Colors.black,
+);
+
+ThemeColors defaultSetButtonBorderColors = ThemeColors(
+  dark: Colors.yellow.shade800,
+  light: Colors.black,
+);
+
+ThemeColors defaultSetButtonTextColors = ThemeColors(
+  dark: Colors.yellow.shade800,
+  light: Colors.black,
+);
+
 const baseYear = 1700;
-const delegateExtent = pickerExtent * 0.5;
+const defaultPickerElementWidth = 48.0;
 const fontSize = 20.0;
 const heightPicker = pickerExtent * 5.0;
+const meridiemAmIndex = 0;
+const meridiemPmIndex = 1;
 const monthsInYear = 12;
 const monthSpan = 35; // 3 x 12 months to offer wrapping scroll
 const padding = EdgeInsets.all(1.0);
 const pickerExtent = 28.0;
-const yearSpan = 400;
-const backgroundDatePickerColorDark = Colors.green;
-const backgroundTimePickerColorDark = Colors.blueAccent;
-const backgroundDatePickerColorLite = Colors.red;
-const backgroundTimePickerColorLite = Colors.grey;
+const totalPickerWidth = 206.0;
 const widthColon = 5.0;
+const widthMeridiem = defaultPickerElementWidth;
+const yearSpan = 400;
 
 Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
-  if (element == null) return brightness == Brightness.dark ? backgroundDatePickerColorDark : backgroundDatePickerColorLite;
+  if (element == null) return defaultDateBackgroundColors.bright(brightness);
   switch (element) {
     case DateTimeElement.year:
     case DateTimeElement.month:
     case DateTimeElement.day:
-      return brightness == Brightness.dark ? backgroundDatePickerColorDark : backgroundDatePickerColorLite;
+      return defaultDateBackgroundColors.bright(brightness);
     case DateTimeElement.hour:
     case DateTimeElement.minute:
     case DateTimeElement.second:
-      return brightness == Brightness.dark ? backgroundTimePickerColorDark : backgroundTimePickerColorLite;
+      return defaultTimeBackgroundColors.bright(brightness);
     default:
       throw FlutterError('Not color for element ${element.toString()}');
   }
 }
 
 Widget _textWidget(String text) => Text(text);
+
+Widget? merdianWidget({required int atIndex}) {
+  return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'));
+}
 
 Widget? pickerWidget({required int atIndex, required DateTimeElement? forElement, DateTime? dateTime}) {
   if (atIndex < 0) return null;
@@ -77,23 +126,16 @@ Widget? pickerWidget({required int atIndex, required DateTimeElement? forElement
 double pickerWidth(DateTimeElement element) {
   switch (element) {
     case DateTimeElement.year:
-      return 48.0;
     case DateTimeElement.month:
     case DateTimeElement.day:
-      return 48.0;
     case DateTimeElement.hour:
     case DateTimeElement.minute:
     case DateTimeElement.second:
-      return 48.0;
+      return defaultPickerElementWidth;
     default:
       throw FlutterError('No widget for element: ${element.toString()}');
   }
 }
-
-TextStyle textStyle({required BuildContext context, TextStyle? textStyle}) => (textStyle ?? TextStyle()).copyWith(
-      color: ThemeManager.color(characterColors, context: context),
-      fontSize: fontSize,
-    );
 
 const String captionColors = 'com.icodeforyou.captionColors';
 const String characterColors = 'com.icodeforyou.textColors';

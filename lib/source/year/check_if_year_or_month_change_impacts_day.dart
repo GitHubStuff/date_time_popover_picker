@@ -26,7 +26,7 @@ class CheckIfYearOrMonthChangeImpactsDay {
 
   /// Check if the selected month will change the value/range of the day (eg Jan has 31 days Feb has 28 or 29)
   bool month(int index) {
-    final int adjustedMonth = (index % 12) + 1;
+    final int adjustedMonth = (index % K.monthsInYear) + 1;
     final int year = _dateTime.year;
     final int daysInCurrentMonth = DateTimeExtension.daysInMonth(_dateTime.month, year: year);
     final int daysInAjustedMonth = DateTimeExtension.daysInMonth(adjustedMonth, year: year);
