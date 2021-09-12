@@ -1,21 +1,32 @@
 import 'package:bloc/bloc.dart';
-import 'package:date_timer_picker_widget/source/year/check_if_year_or_month_change_impacts_day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
+import '../../source/year/check_if_year_or_month_change_impacts_day.dart';
 import '../constants.dart' as K;
 
 part 'date_time_state.dart';
 
 class DateTimeCubit extends Cubit<DateTimeState> {
+  static DateTimeCubit? _instance;
+  DateTimeCubit._internal(DateTime dateTime) : super(DateTimeInitial(dateTime: dateTime));
+  factory DateTimeCubit(DateTime initialDateTime) {
+    _instance = DateTimeCubit._internal(initialDateTime);
+    _instance!.dateTime = initialDateTime;
+    return _instance!;
+  }
+  factory DateTimeCubit.instance() => _instance!;
+
   late DateTime dateTime;
   bool _showSeconds = true;
 
-  DateTimeCubit(DateTime startingDateTime) : super(DateTimeInitial(dateTime: startingDateTime)) {
-    dateTime = startingDateTime.round(_showSeconds ? DateTimeElement.second : DateTimeElement.minute);
-  }
+  // DateTimeCubit(DateTime startingDateTime) : super(DateTimeInitial(dateTime: startingDateTime)) {
+  //   dateTime = startingDateTime.round(_showSeconds ? DateTimeElement.second : DateTimeElement.minute);
+  // }
+  void returnDateTime() => emit(PickerSelectedDateTimeState(dateTime));
+
   String get dateText => DateFormat(K.previewDateFormat).format(dateTime);
 
   bool get showSeconds => _showSeconds;

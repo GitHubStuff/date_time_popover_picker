@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../date_time_picker_widget.dart';
-import '../widgets/date_picker_stack_widget.dart';
+import '../../date_time_popover_picker.dart';
+import '../../source/cubit/date_time_cubit.dart';
 import '../../source/widgets/picker_widget.dart';
 
 export '../widgets/date_picker_stack_widget.dart';
@@ -15,7 +14,7 @@ class DatePickerWidget extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    final dtc = Modular.get<DateTimeCubit>();
+    final dtc = DateTimeCubit.instance();
     UniqueKey dayKey = UniqueKey();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

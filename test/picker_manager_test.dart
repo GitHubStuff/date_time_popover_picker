@@ -1,4 +1,4 @@
-import 'package:date_timer_picker_widget/source/year/check_if_year_or_month_change_impacts_day.dart';
+import 'package:date_time_popover_picker/source/year/check_if_year_or_month_change_impacts_day.dart';
 import 'package:test/test.dart';
 
 void main() {

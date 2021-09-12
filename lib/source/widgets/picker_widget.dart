@@ -1,9 +1,8 @@
-import 'package:date_timer_picker_widget/source/cubit/date_time_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
+import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
 
 class PickerWidget extends StatefulWidget {
@@ -20,7 +19,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   @override
   void initState() {
     super.initState();
-    dateTimeCubit = Modular.get<DateTimeCubit>();
+    dateTimeCubit = DateTimeCubit.instance();
     final int firstIndex = dateTimeCubit.initialPickerValue(widget.element);
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
   }
@@ -28,12 +27,28 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   @override
   void afterFirstLayout(BuildContext buildContext) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      scrollController.position.isScrollingNotifier.addListener(() {
-        if (!scrollController.position.isScrollingNotifier.value) {
-          final pos = scrollController.selectedItem;
-          dateTimeCubit.setElement(widget.element, toIndex: pos);
-        } else {}
-      });
+      debugPrint('ELEMENT ${widget.element.toString()} ${timeStamp.toString()}');
+      final duration = (widget.element == DateTimeElement.day) ? Duration(milliseconds: 750) : Duration(milliseconds: 10);
+      Future.delayed(
+        duration,
+        () {
+          try {
+            scrollController.position.isScrollingNotifier.addListener(() {
+              debugPrint('Inside addListener');
+              if (!scrollController.position.isScrollingNotifier.value) {
+                final pos = scrollController.selectedItem;
+                dateTimeCubit.setElement(widget.element, toIndex: pos);
+              } else {}
+            });
+          } catch (e) {
+            debugPrint('${e.toString()} ${widget.element.toString()}');
+            Future.delayed(Duration(milliseconds: 250), () {
+              debugPrint('RETRY... NOT A FAN');
+              afterFirstLayout(buildContext);
+            });
+          }
+        },
+      );
     });
   }
 

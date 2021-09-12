@@ -21,3 +21,8 @@ class PickerChangedState extends DateTimeState {
 }
 
 class PickerMeridiemChangedState extends DateTimeState {}
+
+class PickerSelectedDateTimeState extends DateTimeState {
+  final DateTime dateTime;
+  PickerSelectedDateTimeState(this.dateTime);
+}

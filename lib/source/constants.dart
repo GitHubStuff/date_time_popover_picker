@@ -36,13 +36,17 @@ const pickerExtent = 28.0;
 const previewDateFormat = 'EEE MMM dd,yyyy';
 const previewTimeFormat = 'h:mm:ss a';
 const previewTimeNoSeconds = 'h:mm a';
-const scrollHeight = 144.0;
+const scrollWheelHeight = 144.0;
 const secondsInMinute = 60;
 const String timeColors = 'com.icodeforyou.com.timeColors';
-const totalPickerWidth = 206.0;
-const widthColon = 5.0; // 3 x 12 months to offer wrapping scroll
+const numberOfTimeScrollWidgets = 4.0;
+const numberOfColons = 2;
+const totalPopoverWidth = (defaultPickerElementWidth * numberOfTimeScrollWidgets) + (numberOfColons * widthColon);
+const totalPopoverHeight = (previewHeight + toggleButtonHeight + scrollWheelHeight);
+const widthColon = 5.0;
 const widthMeridiem = defaultPickerElementWidth;
 const yearSpan = 400;
+const toggleButtonHeight = 36.0;
 
 ThemeColors defaultDateBackgroundColors = ThemeColors(
   dark: Colors.green.shade900,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
-import '../../date_time_picker_widget.dart';
+import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
 
 class MeridiemColonWidget extends StatefulWidget {
@@ -20,7 +19,7 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
   @override
   void initState() {
     super.initState();
-    dateTimeCubit = Modular.get<DateTimeCubit>();
+    dateTimeCubit = DateTimeCubit.instance();
     final int firstIndex = (widget.timeSeparators == K.TimeSeparator.colon) ? K.colonIndex : dateTimeCubit.initialMeridiemIndexValue();
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
   }

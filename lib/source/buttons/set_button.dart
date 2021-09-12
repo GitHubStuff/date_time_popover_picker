@@ -1,3 +1,4 @@
+import 'package:date_time_popover_picker/source/cubit/date_time_cubit.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart' as K;
@@ -6,7 +7,9 @@ class SetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        DateTimeCubit.instance().returnDateTime();
+      },
       child: Container(
         height: 24.0,
         width: 48.0,

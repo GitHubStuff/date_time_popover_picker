@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
-import '../../date_time_picker_widget.dart';
+import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
 
 class DateTimeToggle extends StatelessWidget {
@@ -14,8 +13,8 @@ class DateTimeToggle extends StatelessWidget {
     final Color timeColor = K.pickerBackgroundColor(brightness, DateTimeElement.hour);
     final Color textColor = K.defaultTextBackgroundColors.of(context);
     return Container(
-      width: 206.0,
-      height: 36.0,
+      width: K.totalPopoverHeight,
+      height: K.toggleButtonHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -30,7 +29,7 @@ class DateTimeToggle extends StatelessWidget {
 
   Widget _dateButton(Color color, Color textColor) => Expanded(
         child: ElevatedButton(
-          onPressed: () => Modular.get<DateTimeCubit>().selectItem(DateTimeItem.date),
+          onPressed: () => DateTimeCubit.instance().selectItem(K.DateTimeItem.date),
           style: ElevatedButton.styleFrom(
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
@@ -40,7 +39,7 @@ class DateTimeToggle extends StatelessWidget {
       );
   Widget _timeButton(Color color, Color textColor) => Expanded(
         child: ElevatedButton(
-          onPressed: () => Modular.get<DateTimeCubit>().selectItem(DateTimeItem.time),
+          onPressed: () => DateTimeCubit.instance().selectItem(K.DateTimeItem.time),
           style: ElevatedButton.styleFrom(
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),

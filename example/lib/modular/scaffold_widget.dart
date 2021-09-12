@@ -1,4 +1,4 @@
-import 'package:date_timer_picker_widget/date_time_picker_widget.dart';
+import 'package:date_time_popover_picker/date_time_popover_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:theme_manager/theme_manager.dart';
@@ -12,6 +12,7 @@ class ScaffoldWidget extends StatefulWidget {
 }
 
 class _ScaffoldWidget extends State<ScaffoldWidget> {
+  String _buttonText = 'Date';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +39,18 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(AppLocalizations.of(context)!.helloWorld), //Example of localization
-          DateTimePickerWidget(
+          Text(_buttonText),
+          DateTimePopoverPicker(
             key: UniqueKey(),
-            pickerCallback: (DateTime? dateTime) {},
-            showSeconds: false,
+            initalDateTime: DateTime.now(),
+            onWidget: Text('Select a date', style: TextStyle(fontSize: 24.0)),
+            callback: (newDateTime) {
+              Future.delayed(Duration(milliseconds: 250), () {
+                setState(() {
+                  _buttonText = '${newDateTime.toString()}';
+                });
+              });
+            },
           ),
         ],
       ),

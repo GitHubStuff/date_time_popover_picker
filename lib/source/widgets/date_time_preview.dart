@@ -1,23 +1,21 @@
-import 'package:date_timer_picker_widget/source/buttons/set_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../date_time_picker_widget.dart';
+import '../../source/buttons/set_button.dart';
+import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
 
 class DateTimePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final dtc = Modular.get<DateTimeCubit>();
+    final dtc = DateTimeCubit.instance();
     UniqueKey dateKey = UniqueKey();
     UniqueKey timeKey = UniqueKey();
     TextStyle style = K.previewTextStyle(context);
     return BlocBuilder<DateTimeCubit, DateTimeState>(
       bloc: dtc,
       builder: (context, state) {
-        debugPrint('PREVIEW state: ${state.toString()}');
         if (state is DayChanged) dateKey = UniqueKey();
         if (state is PickerMeridiemChangedState) timeKey = UniqueKey();
         if (state is PickerChangedState) {
@@ -44,7 +42,7 @@ class DateTimePreview extends StatelessWidget {
           ],
         );
         return Container(
-          width: K.totalPickerWidth,
+          width: K.totalPopoverHeight,
           height: K.previewHeight,
           color: K.defaultPreviewBackgroundColors.of(context),
           child: Padding(
