@@ -17,6 +17,7 @@ const backgroundDatePickerColorDark = Colors.green;
 const backgroundTimePickerColorDark = Colors.blueAccent;
 const backgroundDatePickerColorLite = Colors.red;
 const backgroundTimePickerColorLite = Colors.grey;
+const widthColon = 5.0;
 
 Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
   if (element == null) return brightness == Brightness.dark ? backgroundDatePickerColorDark : backgroundDatePickerColorLite;
@@ -34,40 +35,49 @@ Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
   }
 }
 
-Widget? pickerWidget({required int atIndex, required DateTimeElement forElement, DateTime? dateTime}) {
+Widget _textWidget(String text) => Text(text);
+
+Widget? pickerWidget({required int atIndex, required DateTimeElement? forElement, DateTime? dateTime}) {
   if (atIndex < 0) return null;
+  if (forElement == null) {
+    if (atIndex > 0) return null;
+    return _textWidget(':');
+  }
+  late String text;
   switch (forElement) {
     case DateTimeElement.year:
       if (atIndex > yearSpan) return null;
-      return Text('${atIndex + baseYear}');
+      text = '${atIndex + baseYear}';
+      break;
     case DateTimeElement.month:
       if (atIndex > monthSpan) return null;
       final int boundedMonth = (atIndex % 12) + 1;
-      final text = DateFormat('MMM').format(DateTime(2000, boundedMonth, 1));
-      return Text(text);
+      text = DateFormat('MMM').format(DateTime(2000, boundedMonth, 1));
+      break;
     case DateTimeElement.day:
       final span = DateTimeExtension.daysInMonth(dateTime!.month, year: dateTime.year);
       if (atIndex > (span * 3) - 1) return null;
-      final day = (atIndex % span) + 1;
-      return Text('$day');
+      text = ((atIndex % span) + 1).toString();
+      break;
     case DateTimeElement.hour:
       if (atIndex > 35) return null;
       final span = (atIndex % 12);
-      final hour = (span == 0) ? 12 : span;
-      return Text('$hour');
+      text = ((span == 0) ? 12 : span).toString();
+      break;
     case DateTimeElement.minute:
     case DateTimeElement.second:
-      final text = (atIndex % 60).toString().padLeft(1, '0');
-      return Text(text);
+      text = (atIndex % 60).toString().padLeft(2, '0');
+      break;
     default:
       throw FlutterError('No widget for ${forElement.toString()}');
   }
+  return _textWidget(text);
 }
 
 double pickerWidth(DateTimeElement element) {
   switch (element) {
     case DateTimeElement.year:
-      return 50.0;
+      return 48.0;
     case DateTimeElement.month:
     case DateTimeElement.day:
       return 48.0;

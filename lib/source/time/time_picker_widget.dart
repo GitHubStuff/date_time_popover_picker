@@ -1,3 +1,4 @@
+import 'package:date_timer_picker_widget/source/time/colon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 
@@ -17,9 +18,11 @@ class TimePickerWidget extends StatelessWidget {
         PickerWidget(
           element: DateTimeElement.hour,
         ),
+        ColonWidget(),
         PickerWidget(
           element: DateTimeElement.minute,
         ),
+        ColonWidget(),
         PickerWidget(
           element: DateTimeElement.second,
         ),
