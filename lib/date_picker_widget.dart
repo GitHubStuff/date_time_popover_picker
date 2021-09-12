@@ -1,45 +1,26 @@
 library date_timer_picker_widget;
 
+import 'package:date_timer_picker_widget/source/year/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 import 'source/constants.dart' as K;
-import 'source/cubit/date_time_cubit.dart';
-import 'source/widgets/day_widget.dart';
-import 'source/widgets/picker_widget.dart';
+import 'source/time/time_picker_widget.dart';
 
 export 'source/cubit/date_time_cubit.dart';
 
 typedef void PickerCallback(DateTime? dateTime);
 
-class DatePickerWidget extends StatelessWidget {
+class DateTimePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  DatePickerWidget({required this.pickerCallback});
+  const DateTimePickerWidget({required this.pickerCallback});
 
   @override
-  build(BuildContext context) {
-    final dtc = Modular.get<DateTimeCubit>();
-    return Row(
-      children: [
-        PickerWidget(
-          element: DateTimeElement.month,
-        ),
-        BlocBuilder<DateTimeCubit, DateTimeState>(
-            bloc: dtc,
-            builder: (context, state) {
-              return DayWidget(
-                key: UniqueKey(),
-                element: DateTimeElement.day,
-              );
-            }),
-        PickerWidget(
-          element: DateTimeElement.year,
-        ),
-      ],
-    );
+  Widget build(BuildContext context) {
+    return Row(children: [
+      DatePickerWidget(pickerCallback: pickerCallback),
+      TimePickerWidget(pickerCallback: pickerCallback),
+    ]);
   }
 }
 

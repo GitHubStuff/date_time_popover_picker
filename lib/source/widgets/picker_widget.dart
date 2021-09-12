@@ -5,11 +5,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 import '../constants.dart' as K;
-import 'list_wheel.dart';
 
 class PickerWidget extends StatefulWidget {
   final DateTimeElement element;
-  const PickerWidget({required this.element});
+  const PickerWidget({Key? key, required this.element}) : super(key: key);
 
   _PickerWidget createState() => _PickerWidget();
 }
@@ -36,7 +35,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
         if (!scrollController.position.isScrollingNotifier.value) {
           final pos = scrollController.selectedItem;
           debugPrint('POS: $pos for ${widget.element.toString()}');
-          dateTimeCubit.setElement(widget.element, toIdex: pos);
+          dateTimeCubit.setElement(widget.element, toIndex: pos);
         } else {}
       });
     });
@@ -46,16 +45,20 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   Widget build(BuildContext context) {
     final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
     return Container(
-      color: K.pickerBackgroundColor(brightness),
+      color: K.pickerBackgroundColor(brightness, widget.element),
       height: K.heightPicker,
       width: K.pickerWidth(widget.element),
-      child: ListWheel(
-        listWheelChildDelegate: ListWheelChildBuilderDelegate(
-          builder: (context, int index) {
-            return K.pickerWidget(atIndex: index, forElement: widget.element, dateTime: dateTimeCubit.dateTime);
-          },
+      child: Center(
+        child: ListWheelScrollView.useDelegate(
+          itemExtent: K.pickerExtent,
+          physics: FixedExtentScrollPhysics(),
+          controller: scrollController,
+          childDelegate: ListWheelChildBuilderDelegate(
+            builder: (context, int index) {
+              return K.pickerWidget(atIndex: index, forElement: widget.element, dateTime: dateTimeCubit.dateTime);
+            },
+          ),
         ),
-        scrollController: scrollController,
       ),
     );
   }

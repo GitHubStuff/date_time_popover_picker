@@ -7,7 +7,7 @@ class AppModule extends Module {
   // Provide a list of dependencies to inject into your project
   @override
   final List<Bind> binds = [
-    Bind.singleton((i) => DateTimeCubit(DateTime(2020, 2, 29))),
+    Bind.singleton((i) => DateTimeCubit(DateTime(2020, 2, 29, 0, 1, 2))),
     Bind.singleton((i) => DateTimePickerConstants()),
   ];
 

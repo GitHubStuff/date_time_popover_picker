@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter_classes/flutter_classes.dart';
 
-import '../source/constants.dart' as K;
+import '../constants.dart' as K;
 
-class PickerDateTimeManager {
+class CheckIfYearOrMonthChangeImpactsDay {
   late DateTime _dateTime;
-  PickerDateTimeManager({required DateTime initialDateTime}) {
+  CheckIfYearOrMonthChangeImpactsDay({required DateTime initialDateTime}) {
     /// Remove milli & micro seconds
     _dateTime = initialDateTime.round();
   }
@@ -24,6 +24,7 @@ class PickerDateTimeManager {
     return leapYearChange;
   }
 
+  /// Check if the selected month will change the value/range of the day (eg Jan has 31 days Feb has 28 or 29)
   bool month(int index) {
     final int adjustedMonth = (index % 12) + 1;
     final int year = _dateTime.year;

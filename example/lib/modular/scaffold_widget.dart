@@ -38,7 +38,7 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(AppLocalizations.of(context)!.helloWorld), //Example of localization
-          DatePickerWidget(
+          DateTimePickerWidget(
             pickerCallback: (DateTime? dateTime) {},
           ),
         ],
