@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 
-import '../widgets/date_picker_stack_widget.dart';
 import '../../source/constants.dart';
 import '../../source/time/meridiem_colon_widget.dart';
 import '../../source/widgets/picker_widget.dart';
+import '../widgets/date_picker_stack_widget.dart';
 
 export '../widgets/date_picker_stack_widget.dart';
 
 class TimePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
   final bool includeSeconds;
-  TimePickerWidget({required this.pickerCallback, this.includeSeconds = true});
+  TimePickerWidget({required this.pickerCallback, required this.includeSeconds});
 
   @override
   build(BuildContext context) {

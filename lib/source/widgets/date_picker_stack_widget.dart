@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:theme_manager/theme_manager.dart';
 
 import '../../date_time_picker_widget.dart';
 import '../constants.dart' as K;
@@ -14,14 +12,14 @@ typedef void PickerCallback(DateTime? dateTime);
 class DateTimePickerStackWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
   final bool showSeconds;
-  const DateTimePickerStackWidget({required this.pickerCallback, this.showSeconds = true});
+  const DateTimePickerStackWidget({required this.pickerCallback, required this.showSeconds});
 
   @override
   Widget build(BuildContext context) {
     final dtc = Modular.get<DateTimeCubit>();
+    dtc.showSeconds = showSeconds;
     Widget pickerWidget = DatePickerWidget(pickerCallback: pickerCallback);
-    final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
-    Color backgroundColor = K.pickerBackgroundColor(brightness, DateTimeElement.year);
+    Color backgroundColor = defaultDateBackgroundColors.of(context);
     return BlocBuilder<DateTimeCubit, DateTimeState>(
         bloc: dtc,
         builder: (context, state) {
@@ -29,17 +27,20 @@ class DateTimePickerStackWidget extends StatelessWidget {
             switch (state.dateTimeItem) {
               case K.DateTimeItem.date:
                 pickerWidget = DatePickerWidget(pickerCallback: pickerCallback);
-                backgroundColor = K.pickerBackgroundColor(brightness, DateTimeElement.year);
+                backgroundColor = defaultDateBackgroundColors.of(context);
                 break;
               case K.DateTimeItem.time:
-                pickerWidget = TimePickerWidget(pickerCallback: pickerCallback);
-                backgroundColor = K.pickerBackgroundColor(brightness, DateTimeElement.hour);
+                pickerWidget = TimePickerWidget(
+                  pickerCallback: pickerCallback,
+                  includeSeconds: showSeconds,
+                );
+                backgroundColor = defaultTimeBackgroundColors.of(context);
             }
           }
           return Container(
             color: backgroundColor,
             width: K.totalPickerWidth,
-            height: 144.0,
+            height: K.scrollHeight,
             child: Center(child: pickerWidget),
           );
         });

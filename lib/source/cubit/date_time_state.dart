@@ -14,3 +14,10 @@ class PickerTypeChanged extends DateTimeState {
   final K.DateTimeItem dateTimeItem;
   PickerTypeChanged({required this.dateTimeItem});
 }
+
+class PickerChangedState extends DateTimeState {
+  final DateTimeElement element;
+  PickerChangedState(this.element);
+}
+
+class PickerMeridiemChangedState extends DateTimeState {}

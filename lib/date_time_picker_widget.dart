@@ -4,26 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:theme_manager/theme_manager.dart';
 
 import 'source/buttons/date_time_toggle.dart';
-import 'source/buttons/set_button.dart';
 import 'source/constants.dart' as K;
 import 'source/widgets/date_picker_stack_widget.dart';
+import 'source/widgets/date_time_preview.dart';
 
 export 'source/constants.dart';
 export 'source/cubit/date_time_cubit.dart';
 
 class DateTimePickerWidget extends StatelessWidget {
+  final bool showSeconds;
   final PickerCallback pickerCallback;
 
-  const DateTimePickerWidget({required this.pickerCallback});
+  const DateTimePickerWidget({
+    Key? key,
+    required this.pickerCallback,
+    required this.showSeconds,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SetButton(),
+        DateTimePreview(),
         DateTimeToggle(),
-        DateTimePickerStackWidget(pickerCallback: pickerCallback),
+        DateTimePickerStackWidget(
+          pickerCallback: pickerCallback,
+          showSeconds: showSeconds,
+        ),
       ],
     );
   }

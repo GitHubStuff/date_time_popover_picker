@@ -39,7 +39,9 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
         children: <Widget>[
           Text(AppLocalizations.of(context)!.helloWorld), //Example of localization
           DateTimePickerWidget(
+            key: UniqueKey(),
             pickerCallback: (DateTime? dateTime) {},
+            showSeconds: false,
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:date_timer_picker_widget/source/year/check_if_year_or_month_change_impacts_day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../constants.dart' as K;
@@ -9,13 +10,21 @@ import '../constants.dart' as K;
 part 'date_time_state.dart';
 
 class DateTimeCubit extends Cubit<DateTimeState> {
-  DateTime dateTime;
+  late DateTime dateTime;
+  bool _showSeconds = true;
 
-  DateTimeCubit(this.dateTime) : super(DateTimeInitial(dateTime: dateTime));
-
-  void selectItem(K.DateTimeItem dateTimeItem) {
-    emit(PickerTypeChanged(dateTimeItem: dateTimeItem));
+  DateTimeCubit(DateTime startingDateTime) : super(DateTimeInitial(dateTime: startingDateTime)) {
+    dateTime = startingDateTime.round(_showSeconds ? DateTimeElement.second : DateTimeElement.minute);
   }
+  String get dateText => DateFormat(K.previewDateFormat).format(dateTime);
+
+  bool get showSeconds => _showSeconds;
+  set showSeconds(bool value) {
+    _showSeconds = value;
+    if (!value) dateTime = dateTime.round(DateTimeElement.minute);
+  }
+
+  String get timeText => DateFormat(_showSeconds ? K.previewTimeFormat : K.previewTimeNoSeconds).format(dateTime);
 
   bool get _isPM => dateTime.hour >= K.amPmDemarkHour;
 
@@ -41,19 +50,29 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     }
   }
 
+  void selectItem(K.DateTimeItem dateTimeItem) {
+    emit(PickerTypeChanged(dateTimeItem: dateTimeItem));
+  }
+
   void setElement(DateTimeElement element, {required int toIndex}) {
     switch (element) {
       case DateTimeElement.year:
         final pickerManager = CheckIfYearOrMonthChangeImpactsDay(initialDateTime: dateTime);
         final bool dayChanged = pickerManager.year(toIndex);
         dateTime = pickerManager.dateTime;
-        if (dayChanged) emit(DayChanged());
+        if (dayChanged) {
+          emit(DayChanged());
+          return;
+        }
         break;
       case DateTimeElement.month:
         final pickerManager = CheckIfYearOrMonthChangeImpactsDay(initialDateTime: dateTime);
         final bool dayChanged = pickerManager.month(toIndex);
         dateTime = pickerManager.dateTime;
-        if (dayChanged) emit(DayChanged());
+        if (dayChanged) {
+          emit(DayChanged());
+          return;
+        }
         break;
       case DateTimeElement.day:
         dateTime = dateTime.update(element, to: _roundDays(toIndex, dateTime));
@@ -74,6 +93,7 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     final date = dateTime.shortDate();
     final time = dateTime.shortTime('h:mm:ss a');
     debugPrint('SET: ${element.toString()} $date $time');
+    emit(PickerChangedState(element));
   }
 
   void setMeridiem({required K.TimeSeparator seperatorType, required int index}) {
@@ -85,6 +105,7 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     final date = dateTime.shortDate();
     final time = dateTime.shortTime('h:mm:ss a');
     debugPrint('SET: Meridiem $date $time');
+    emit(PickerMeridiemChangedState());
   }
 
   int _roundDays(int index, DateTime dateTime) => (index % (DateTimeExtension.daysInMonth(dateTime.month, year: dateTime.year))) + 1;
