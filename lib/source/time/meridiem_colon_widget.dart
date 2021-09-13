@@ -27,9 +27,7 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
   @override
   void afterFirstLayout(BuildContext buildContext) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      scrollController.addListener(() {
-        //debugPrint('Scrolling');
-      });
+      scrollController.addListener(() {});
       scrollController.position.isScrollingNotifier.addListener(() {
         if (!scrollController.position.isScrollingNotifier.value) {
           final pos = scrollController.selectedItem;

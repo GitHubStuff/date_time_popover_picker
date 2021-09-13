@@ -42,7 +42,6 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
           Text(_buttonText),
           DateTimePopoverPicker(
             key: UniqueKey(),
-            initalDateTime: DateTime.now(),
             onWidget: Text('Select a date', style: TextStyle(fontSize: 24.0)),
             callback: (newDateTime) {
               Future.delayed(Duration(milliseconds: 250), () {

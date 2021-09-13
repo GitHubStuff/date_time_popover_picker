@@ -15,6 +15,7 @@ class PickerWidget extends StatefulWidget {
 class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   late FixedExtentScrollController scrollController;
   late DateTimeCubit dateTimeCubit;
+  late ListWheelScrollView listWheelScrollView;
 
   @override
   void initState() {
@@ -22,33 +23,35 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
     dateTimeCubit = DateTimeCubit.instance();
     final int firstIndex = dateTimeCubit.initialPickerValue(widget.element);
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
+    listWheelScrollView = ListWheelScrollView.useDelegate(
+      useMagnifier: true,
+      magnification: 1.2,
+      itemExtent: K.pickerExtent,
+      physics: FixedExtentScrollPhysics(),
+      controller: scrollController,
+      childDelegate: ListWheelChildBuilderDelegate(
+        builder: (context, int index) {
+          return K.pickerWidget(
+            atIndex: index,
+            forElement: widget.element,
+            dateTime: dateTimeCubit.dateTime,
+          );
+        },
+      ),
+    );
   }
 
   @override
   void afterFirstLayout(BuildContext buildContext) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      debugPrint('ELEMENT ${widget.element.toString()} ${timeStamp.toString()}');
-      final duration = (widget.element == DateTimeElement.day) ? Duration(milliseconds: 750) : Duration(milliseconds: 10);
-      Future.delayed(
-        duration,
-        () {
-          try {
-            scrollController.position.isScrollingNotifier.addListener(() {
-              debugPrint('Inside addListener');
-              if (!scrollController.position.isScrollingNotifier.value) {
-                final pos = scrollController.selectedItem;
-                dateTimeCubit.setElement(widget.element, toIndex: pos);
-              } else {}
-            });
-          } catch (e) {
-            debugPrint('${e.toString()} ${widget.element.toString()}');
-            Future.delayed(Duration(milliseconds: 250), () {
-              debugPrint('RETRY... NOT A FAN');
-              afterFirstLayout(buildContext);
-            });
-          }
-        },
-      );
+      if (scrollController.hasClients) {
+        scrollController.position.isScrollingNotifier.addListener(() {
+          if (!scrollController.position.isScrollingNotifier.value) {
+            final pos = scrollController.selectedItem;
+            dateTimeCubit.setElement(widget.element, toIndex: pos);
+          } else {}
+        });
+      }
     });
   }
 
@@ -60,22 +63,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
       height: K.heightPicker,
       width: K.pickerWidth(widget.element),
       child: Center(
-        child: ListWheelScrollView.useDelegate(
-          useMagnifier: true,
-          magnification: 1.2,
-          itemExtent: K.pickerExtent,
-          physics: FixedExtentScrollPhysics(),
-          controller: scrollController,
-          childDelegate: ListWheelChildBuilderDelegate(
-            builder: (context, int index) {
-              return K.pickerWidget(
-                atIndex: index,
-                forElement: widget.element,
-                dateTime: dateTimeCubit.dateTime,
-              );
-            },
-          ),
-        ),
+        child: listWheelScrollView,
       ),
     );
   }

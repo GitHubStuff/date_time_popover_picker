@@ -9,14 +9,12 @@ import 'date_time_preview.dart';
 
 class DateTimePickerWidget extends StatelessWidget {
   final DateTime initialDateTime;
-  final bool showSeconds;
   final PickerCallback pickerCallback;
 
   const DateTimePickerWidget({
     Key? key,
     required this.initialDateTime,
     required this.pickerCallback,
-    required this.showSeconds,
   }) : super(key: key);
 
   @override
@@ -28,7 +26,6 @@ class DateTimePickerWidget extends StatelessWidget {
         DateTimeToggle(),
         DateTimePickerStackWidget(
           pickerCallback: pickerCallback,
-          showSeconds: showSeconds,
         ),
       ],
     );
