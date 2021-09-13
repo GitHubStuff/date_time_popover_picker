@@ -56,7 +56,7 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
           child: widget.onWidget,
           onTap: () {
             showPopover(
-              backgroundColor: Colors.lightGreen,
+              backgroundColor: K.defaultPreviewBackgroundColors.of(context),
               context: context,
               bodyBuilder: (context) => _picker(),
               onPop: () {},

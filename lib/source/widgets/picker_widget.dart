@@ -25,7 +25,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
     listWheelScrollView = ListWheelScrollView.useDelegate(
       useMagnifier: true,
-      magnification: 1.2,
+      magnification: K.listWheelScrollViewMagnification,
       itemExtent: K.pickerExtent,
       physics: FixedExtentScrollPhysics(),
       controller: scrollController,
