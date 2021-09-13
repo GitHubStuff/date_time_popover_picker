@@ -9,13 +9,11 @@ import '../year/date_picker_widget.dart';
 
 class DateTimePickerStackWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  final bool showSeconds;
-  const DateTimePickerStackWidget({required this.pickerCallback, required this.showSeconds});
+  const DateTimePickerStackWidget({required this.pickerCallback});
 
   @override
   Widget build(BuildContext context) {
     final dtc = DateTimeCubit.instance();
-    dtc.showSeconds = showSeconds;
     Widget pickerWidget = DatePickerWidget(pickerCallback: pickerCallback);
     Color backgroundColor = K.defaultDateBackgroundColors.of(context);
     return BlocBuilder<DateTimeCubit, DateTimeState>(
@@ -30,7 +28,7 @@ class DateTimePickerStackWidget extends StatelessWidget {
               case K.DateTimeItem.time:
                 pickerWidget = TimePickerWidget(
                   pickerCallback: pickerCallback,
-                  includeSeconds: showSeconds,
+                  includeSeconds: dtc.showSeconds,
                 );
                 backgroundColor = K.defaultTimeBackgroundColors.of(context);
             }

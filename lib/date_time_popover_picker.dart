@@ -13,7 +13,7 @@ typedef void PickerCallback(DateTime dateTime);
 
 class DateTimePopoverPicker extends StatefulWidget {
   final Widget onWidget;
-  final DateTime initalDateTime;
+  final DateTime? initalDateTime;
   final PickerCallback callback;
   final bool includeSeconds;
 
@@ -21,7 +21,7 @@ class DateTimePopoverPicker extends StatefulWidget {
     Key? key,
     required this.onWidget,
     required this.callback,
-    required this.initalDateTime,
+    this.initalDateTime,
     this.includeSeconds = true,
   }) : super(key: key);
 
@@ -33,7 +33,11 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
   @override
   void initState() {
     super.initState();
-    DateTimeCubit(widget.initalDateTime.round(widget.includeSeconds ? DateTimeElement.second : DateTimeElement.minute));
+    final dateTime = widget.initalDateTime ?? DateTime.now().toLocal();
+    DateTimeCubit(
+      dateTime,
+      widget.includeSeconds,
+    );
   }
 
   @override
@@ -68,9 +72,10 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
   }
 
   Widget _picker() {
+    final dateTime = (widget.initalDateTime ?? DateTime.now().toLocal());
+    DateTimeCubit.instance().dateTime = dateTime;
     return DateTimePickerWidget(
-      initialDateTime: widget.initalDateTime,
-      showSeconds: widget.includeSeconds,
+      initialDateTime: dateTime,
       pickerCallback: widget.callback,
     );
   }
