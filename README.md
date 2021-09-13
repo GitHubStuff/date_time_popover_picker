@@ -24,9 +24,9 @@ import 'package:date_time_popover_picker/date_time_popover_picker.dart
 ```dart
 DateTimePopoverPicker(
             Key? key,
-            DateTime? initalDateTime,  //if null
+            DateTime? initalDateTime,  //if omitted value => DateTime.now().local()
             required Widget onWidget,
-            required Function(DateTime) callback,
+            required Function(DateTime) callback,  // Returns selected date/time
             bool includeSeconds,  //default: true
           );
 ```

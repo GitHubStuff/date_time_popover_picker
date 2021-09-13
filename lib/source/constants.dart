@@ -9,45 +9,45 @@ const amPmDemarkHour = 12;
 const baseYear = 1700;
 
 const String captionColors = 'com.icodeforyou.captionColors';
-
 const String characterColors = 'com.icodeforyou.textColors';
 const colonIndex = 0;
 const String dateColors = 'com.icodeforyou.com.dateColors';
 const defaultPickerElementWidth = 48.0;
 const fontSize = 20.0;
 const heightPicker = pickerExtent * 5.0;
+const listWheelScrollViewMagnification = 1.25;
 const meridiemAmIndex = 0;
 const meridiemPmIndex = 1;
-const previewHeight = 48.0;
 const midnightHour = 0;
-const previewInsets = const EdgeInsets.all(4.0);
-TextStyle previewTextStyle(BuildContext context) => TextStyle(
-      fontSize: 16.0,
-      color: Colors.black,
-    );
 const minutesInHour = 60;
-
 const monthsInYear = 12;
-
 const monthSpan = 35;
+const numberOfColons = 2;
+const numberOfTimeScrollWidgets = 4.0;
 const padding = EdgeInsets.all(1.0);
 const pickerExtent = 28.0;
 
 const previewDateFormat = 'EEE MMM dd,yyyy';
+
+const previewHeight = 48.0;
+const previewInsets = const EdgeInsets.all(4.0);
 const previewTimeFormat = 'h:mm:ss a';
+
 const previewTimeNoSeconds = 'h:mm a';
 const scrollWheelHeight = 144.0;
 const secondsInMinute = 60;
+const setButtonBorder = 1.0;
+const setButtonHeight = 24.0;
+const setButtonRadius = 10.0;
+const setButtonWidth = 48.0;
+const setText = 'SET';
 const String timeColors = 'com.icodeforyou.com.timeColors';
-const numberOfTimeScrollWidgets = 4.0;
-const numberOfColons = 2;
-const totalPopoverWidth = (defaultPickerElementWidth * numberOfTimeScrollWidgets) + (numberOfColons * widthColon);
+const toggleButtonHeight = 36.0;
 const totalPopoverHeight = (previewHeight + toggleButtonHeight + scrollWheelHeight);
+const totalPopoverWidth = (defaultPickerElementWidth * numberOfTimeScrollWidgets) + (numberOfColons * widthColon);
 const widthColon = 5.0;
 const widthMeridiem = defaultPickerElementWidth;
 const yearSpan = 400;
-const toggleButtonHeight = 36.0;
-
 ThemeColors defaultDateBackgroundColors = ThemeColors(
   dark: Colors.green.shade900,
   light: Colors.blueGrey.shade100,
@@ -56,6 +56,7 @@ ThemeColors defaultPreviewBackgroundColors = ThemeColors(
   dark: Colors.green.shade800,
   light: Colors.blueGrey.shade300,
 );
+
 ThemeColors defaultSetButtonBackgroundColors = ThemeColors(
   dark: Colors.green.shade900,
   light: Colors.white70,
@@ -72,12 +73,10 @@ ThemeColors defaultTextBackgroundColors = ThemeColors(
   dark: Colors.yellow.shade800,
   light: Colors.black,
 );
-
 ThemeColors defaultTimeBackgroundColors = ThemeColors(
   dark: Colors.green.shade500,
   light: Colors.blueGrey.shade200,
 );
-
 Widget? merdianWidget({required int atIndex}) {
   return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'));
 }
@@ -148,6 +147,13 @@ double pickerWidth(DateTimeElement element) {
       throw FlutterError('No widget for element: ${element.toString()}');
   }
 }
+
+TextStyle previewTextStyle(BuildContext context) => TextStyle(
+      fontSize: 16.0,
+      color: Colors.black,
+    );
+
+TextStyle setButtonStyle(BuildContext context) => TextStyle(fontSize: 18.0, color: defaultSetButtonTextColors.of(context));
 
 Widget _textWidget(String text) => Text(text);
 enum DateTimeItem {

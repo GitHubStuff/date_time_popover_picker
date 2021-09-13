@@ -33,9 +33,6 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     _dateTime = _dateTime.round(newValue ? DateTimeElement.second : DateTimeElement.minute);
   }
 
-  // DateTimeCubit(DateTime startingDateTime) : super(DateTimeInitial(dateTime: startingDateTime)) {
-  //   dateTime = startingDateTime.round(_showSeconds ? DateTimeElement.second : DateTimeElement.minute);
-  // }
   void returnDateTime() => emit(PickerSelectedDateTimeState(_dateTime));
 
   String get dateText => DateFormat(K.previewDateFormat).format(_dateTime);
@@ -51,10 +48,10 @@ class DateTimeCubit extends Cubit<DateTimeState> {
       case DateTimeElement.year:
         return _dateTime.year - K.baseYear;
       case DateTimeElement.month:
-        return (_dateTime.month - 1) + K.monthsInYear;
+        return (_dateTime.month - 1) + K.monthsInYear; // -1 => adjust for zero offset
       case DateTimeElement.day:
         final dayCount = _dateTime.daysInTheMonth;
-        return (_dateTime.day - 1) + dayCount;
+        return (_dateTime.day - 1) + dayCount; // -1 => adjust for zero offset
       case DateTimeElement.hour:
         return ((_dateTime.hour % K.amPmDemarkHour) + K.amPmDemarkHour);
       case DateTimeElement.minute:
