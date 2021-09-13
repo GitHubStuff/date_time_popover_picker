@@ -29,11 +29,13 @@ const pickerExtent = 28.0;
 
 const previewDateFormat = 'EEE MMM dd,yyyy';
 
+const previewDateText = 'Date';
 const previewHeight = 48.0;
 const previewInsets = const EdgeInsets.all(4.0);
-const previewTimeFormat = 'h:mm:ss a';
 
+const previewTimeFormat = 'h:mm:ss a';
 const previewTimeNoSeconds = 'h:mm a';
+const previewTimeText = 'Time';
 const scrollWheelHeight = 144.0;
 const secondsInMinute = 60;
 const setButtonBorder = 1.0;

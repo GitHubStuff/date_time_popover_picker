@@ -34,7 +34,7 @@ class DateTimeToggle extends StatelessWidget {
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
           ),
-          child: _text('Date', textColor),
+          child: _text(K.previewDateText, textColor),
         ),
       );
   Widget _timeButton(Color color, Color textColor) => Expanded(
@@ -44,7 +44,7 @@ class DateTimeToggle extends StatelessWidget {
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
           ),
-          child: _text('Time', textColor),
+          child: _text(K.previewTimeText, textColor),
         ),
       );
 }
