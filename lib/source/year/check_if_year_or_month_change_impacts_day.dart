@@ -1,9 +1,11 @@
+// Copyright 2021, LTMM LLC.
 import 'dart:math';
 
 import 'package:flutter_classes/flutter_classes.dart';
 
 import '../constants.dart' as K;
 
+/// Go in/out of leap year, or days in month get changed.
 class CheckIfYearOrMonthChangeImpactsDay {
   late DateTime _dateTime;
   CheckIfYearOrMonthChangeImpactsDay({required DateTime initialDateTime}) {

@@ -1,3 +1,4 @@
+// Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_classes/flutter_classes.dart';
@@ -14,17 +15,17 @@ class DatePickerWidget extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    final dtc = DateTimeCubit.instance();
+    final dateTimeCubit = DateTimeCubit.instance();
     UniqueKey dayKey = UniqueKey();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        PickerWidget(
-          element: DateTimeElement.month,
-        ),
+        PickerWidget(element: DateTimeElement.month),
         BlocBuilder<DateTimeCubit, DateTimeState>(
-            bloc: dtc,
+            bloc: dateTimeCubit,
             builder: (context, state) {
+              /// to reduce re-draw, create a new UniqueKey only if change in year/month changed the number
+              /// days in the month (eg change from Nov:30 => Dec:31, or Year:2019+Mon:Feb => Year:2020+Mon:Feb {leap year})
               if (state is DayChanged) dayKey = UniqueKey();
               return PickerWidget(
                 key: dayKey,

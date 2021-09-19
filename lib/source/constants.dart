@@ -8,6 +8,8 @@ const amPmDemarkHour = 12;
 
 const baseYear = 1700;
 
+const arrowPixelHeight = 7.5;
+const arrowPixelWidgth = 15.0;
 const String captionColors = 'com.icodeforyou.captionColors';
 const String characterColors = 'com.icodeforyou.textColors';
 const colonIndex = 0;
@@ -51,36 +53,36 @@ const widthColon = 5.0;
 const widthMeridiem = defaultPickerElementWidth;
 const yearSpan = 400;
 ThemeColors defaultDateBackgroundColors = ThemeColors(
-  dark: Colors.green.shade900,
+  dark: Color(0xff243b53),
   light: Colors.blueGrey.shade100,
 );
 ThemeColors defaultPreviewBackgroundColors = ThemeColors(
-  dark: Colors.green.shade800,
+  dark: Color(0xff102a43),
   light: Colors.blueGrey.shade300,
 );
-
+ThemeColors defaultPreviewTextColors = ThemeColors(dark: Colors.white, light: Colors.black,);
 ThemeColors defaultSetButtonBackgroundColors = ThemeColors(
-  dark: Colors.green.shade900,
+  dark: Color(0xff102a43),
   light: Colors.white70,
 );
 ThemeColors defaultSetButtonBorderColors = ThemeColors(
-  dark: Colors.yellow.shade800,
+  dark: Color(0xffbcccdc),
   light: Colors.black,
 );
 ThemeColors defaultSetButtonTextColors = ThemeColors(
-  dark: Colors.yellow.shade800,
+  dark: Color(0xffbcccdc),
   light: Colors.black,
 );
 ThemeColors defaultTextBackgroundColors = ThemeColors(
-  dark: Colors.yellow.shade800,
+  dark: Color(0xffbcccdc),
   light: Colors.black,
 );
 ThemeColors defaultTimeBackgroundColors = ThemeColors(
-  dark: Colors.green.shade500,
+  dark: Color(0xff334e68),
   light: Colors.blueGrey.shade200,
 );
-Widget? merdianWidget({required int atIndex}) {
-  return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'));
+Widget? merdianWidget({required BuildContext context, required int atIndex}) {
+  return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'), context);
 }
 
 Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
@@ -99,11 +101,16 @@ Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
   }
 }
 
-Widget? pickerWidget({required int atIndex, required DateTimeElement? forElement, DateTime? dateTime}) {
+Widget? pickerWidget({
+  required BuildContext context,
+  required int atIndex,
+  required DateTimeElement? forElement,
+  DateTime? dateTime,
+}) {
   if (atIndex < 0) return null;
   if (forElement == null) {
     if (atIndex > 0) return null;
-    return _textWidget(':');
+    return _textWidget(':', context);
   }
   late String text;
   switch (forElement) {
@@ -133,7 +140,7 @@ Widget? pickerWidget({required int atIndex, required DateTimeElement? forElement
     default:
       throw FlutterError('No widget for ${forElement.toString()}');
   }
-  return _textWidget(text);
+  return _textWidget(text, context);
 }
 
 double pickerWidth(DateTimeElement element) {
@@ -152,12 +159,16 @@ double pickerWidth(DateTimeElement element) {
 
 TextStyle previewTextStyle(BuildContext context) => TextStyle(
       fontSize: 16.0,
-      color: Colors.black,
+      color: defaultPreviewTextColors.of(context),
     );
 
 TextStyle setButtonStyle(BuildContext context) => TextStyle(fontSize: 18.0, color: defaultSetButtonTextColors.of(context));
 
-Widget _textWidget(String text) => Text(text);
+Widget _textWidget(String text, BuildContext context) => Text(text,
+    style: TextStyle(
+      color: defaultSetButtonTextColors.of(context),
+    ));
+
 enum DateTimeItem {
   date,
   time,

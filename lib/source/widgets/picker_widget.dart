@@ -1,3 +1,4 @@
+// Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 import 'package:theme_manager/theme_manager.dart';
@@ -32,6 +33,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
       childDelegate: ListWheelChildBuilderDelegate(
         builder: (context, int index) {
           return K.pickerWidget(
+            context: context,
             atIndex: index,
             forElement: widget.element,
             dateTime: dateTimeCubit.dateTime,

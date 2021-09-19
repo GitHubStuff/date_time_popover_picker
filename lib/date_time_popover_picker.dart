@@ -1,3 +1,4 @@
+// Copyright 2021, LTMM LLC.
 library date_time_popover_picker;
 
 import 'package:flutter/material.dart';
@@ -62,8 +63,8 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
               onPop: () {},
               width: K.totalPopoverWidth,
               height: K.totalPopoverHeight,
-              arrowHeight: 7.5,
-              arrowWidth: 15.0,
+              arrowHeight: K.arrowPixelHeight,
+              arrowWidth: K.arrowPixelWidgth,
             );
           },
         );

@@ -1,22 +1,22 @@
 name: date_time_popover_picker
 description: Popover Widget to select/set DateTime
-version: 0.0.1+9
+version: 0.0.2+1
 homepage: http://www.icodeforyou.com
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.14.0 <3.0.0" #Dart SDK 4-SEP-2021
-  flutter: ">=2.5.0"
+  sdk: ">=2.14.2 <3.0.0" #Dart SDK 19-SEP-2021
+  flutter: ">=2.5.1"
 
 dependencies:
   cupertino_icons: ^1.0.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^7.2.0
   flutter_classes:
     git:
       url: https://github.com/GitHubStuff/flutter_classes.git
-  flutter_modular: ^3.4.1+1
+  flutter_modular: ^4.0.0+7
   intl: ^0.17.0
   popover: ^0.2.6+2
   theme_manager:

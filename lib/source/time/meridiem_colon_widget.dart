@@ -1,3 +1,4 @@
+// Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
 import 'package:theme_manager/theme_manager.dart';
@@ -51,7 +52,9 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
           controller: scrollController,
           childDelegate: ListWheelChildBuilderDelegate(
             builder: (context, int index) {
-              return widget.timeSeparators == K.TimeSeparator.colon ? K.pickerWidget(atIndex: index, forElement: null, dateTime: null) : K.merdianWidget(atIndex: index);
+              return widget.timeSeparators == K.TimeSeparator.colon
+                  ? K.pickerWidget(context: context, atIndex: index, forElement: null, dateTime: null)
+                  : K.merdianWidget(context: context, atIndex: index);
             },
           ),
         ),
