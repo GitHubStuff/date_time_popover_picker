@@ -11,7 +11,7 @@ export '../widgets/date_picker_stack_widget.dart';
 
 class DatePickerWidget extends StatelessWidget {
   final PickerCallback pickerCallback;
-  DatePickerWidget({required this.pickerCallback});
+  DatePickerWidget({Key? key, required this.pickerCallback}) : super(key: key);
 
   @override
   build(BuildContext context) {
