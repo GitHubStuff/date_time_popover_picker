@@ -15,7 +15,7 @@ dependencies:
   date_time_popover_picker:
     path: ../
   cupertino_icons: ^1.0.3
-  flutter_bloc: ^7.2.0
+  flutter_bloc: ^7.3.0
   flutter_modular: ^4.0.0+7
   intl: ^0.17.0
 

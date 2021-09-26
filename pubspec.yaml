@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.2.0
+  flutter_bloc: ^7.3.0
   flutter_classes:
     git:
       url: https://github.com/GitHubStuff/flutter_classes.git
