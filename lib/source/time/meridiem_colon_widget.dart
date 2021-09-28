@@ -20,7 +20,7 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
   @override
   void initState() {
     super.initState();
-    dateTimeCubit = DateTimeCubit.instance();
+    dateTimeCubit = DateTimeCubit.instance()!;
     final int firstIndex = (widget.timeSeparators == K.TimeSeparator.colon) ? K.colonIndex : dateTimeCubit.initialMeridiemIndexValue();
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
   }

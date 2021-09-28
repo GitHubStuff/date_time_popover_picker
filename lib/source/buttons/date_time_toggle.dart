@@ -30,7 +30,7 @@ class DateTimeToggle extends StatelessWidget {
 
   Widget _dateButton(Color color, Color textColor) => Expanded(
         child: ElevatedButton(
-          onPressed: () => DateTimeCubit.instance().selectItem(K.DateTimeItem.date),
+          onPressed: () => DateTimeCubit.instance()?.selectItem(K.DateTimeItem.date),
           style: ElevatedButton.styleFrom(
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
@@ -40,7 +40,7 @@ class DateTimeToggle extends StatelessWidget {
       );
   Widget _timeButton(Color color, Color textColor) => Expanded(
         child: ElevatedButton(
-          onPressed: () => DateTimeCubit.instance().selectItem(K.DateTimeItem.time),
+          onPressed: () => DateTimeCubit.instance()?.selectItem(K.DateTimeItem.time),
           style: ElevatedButton.styleFrom(
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),

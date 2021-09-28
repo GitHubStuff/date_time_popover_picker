@@ -9,7 +9,7 @@ class SetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        DateTimeCubit.instance().returnDateTime();
+        DateTimeCubit.instance()?.returnDateTime();
       },
       child: Container(
         height: K.setButtonHeight,
