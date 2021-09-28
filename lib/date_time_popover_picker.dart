@@ -60,9 +60,7 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
               backgroundColor: K.defaultPreviewBackgroundColors.of(context),
               context: context,
               bodyBuilder: (context) => _picker(),
-              onPop: () {
-                debugPrint("GestureDetector: onPop");
-              },
+              onPop: () {},
               width: K.totalPopoverWidth,
               height: K.totalPopoverHeight,
               arrowHeight: K.arrowPixelHeight,
@@ -76,7 +74,7 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
 
   Widget _picker() {
     final dateTime = (widget.initalDateTime ?? DateTime.now().toLocal());
-    DateTimeCubit.instance().dateTime = dateTime;
+    DateTimeCubit.instance()!.dateTime = dateTime;
     return DateTimePickerWidget(
       initialDateTime: dateTime,
       pickerCallback: widget.callback,

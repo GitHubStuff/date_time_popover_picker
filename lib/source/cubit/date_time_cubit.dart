@@ -19,7 +19,8 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     _instance!._showSeconds = includeSeconds;
     return _instance!;
   }
-  factory DateTimeCubit.instance() => _instance!;
+  //factory DateTimeCubit.instance() => _instance;
+  static DateTimeCubit? instance() => _instance;
 
   late DateTime _dateTime;
   late bool _showSeconds;

@@ -21,11 +21,13 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
   @override
   void initState() {
     super.initState();
-    dateTimeCubit = DateTimeCubit.instance();
+    dateTimeCubit = DateTimeCubit.instance()!;
     final int firstIndex = dateTimeCubit.initialPickerValue(widget.element);
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
     listWheelScrollView = ListWheelScrollView.useDelegate(
+      overAndUnderCenterOpacity: 0.5,
       useMagnifier: true,
+      offAxisFraction: K.pickerOffAxisFraction(widget.element),
       magnification: K.listWheelScrollViewMagnification,
       itemExtent: K.pickerExtent,
       physics: FixedExtentScrollPhysics(),

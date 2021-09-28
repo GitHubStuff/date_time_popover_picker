@@ -38,7 +38,7 @@ class DateTimePreview extends StatelessWidget {
         Widget previewTextWidget = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(dtc.dateText, style: style, key: dateKey),
+            Text(dtc!.dateText, style: style, key: dateKey),
             Text(dtc.timeText, style: style, key: timeKey),
           ],
         );

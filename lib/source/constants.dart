@@ -60,7 +60,10 @@ ThemeColors defaultPreviewBackgroundColors = ThemeColors(
   dark: Color(0xff102a43),
   light: Colors.blueGrey.shade300,
 );
-ThemeColors defaultPreviewTextColors = ThemeColors(dark: Colors.white, light: Colors.black,);
+ThemeColors defaultPreviewTextColors = ThemeColors(
+  dark: Colors.white,
+  light: Colors.black,
+);
 ThemeColors defaultSetButtonBackgroundColors = ThemeColors(
   dark: Color(0xff102a43),
   light: Colors.white70,
@@ -154,6 +157,32 @@ double pickerWidth(DateTimeElement element) {
       return defaultPickerElementWidth;
     default:
       throw FlutterError('No widget for element: ${element.toString()}');
+  }
+}
+
+const pickerAxisFractionLeft = -0.4;
+const pickerAxisFractionRight = 0.4;
+const pickerAxisFractionSeconds = 0.2;
+
+double pickerOffAxisFraction(DateTimeElement? element) {
+  switch (element) {
+    case null:
+      return 0.0;
+    case DateTimeElement.month:
+      return pickerAxisFractionLeft;
+    case DateTimeElement.day:
+      return 0.0;
+    case DateTimeElement.year:
+      return pickerAxisFractionRight;
+    case DateTimeElement.hour:
+      return pickerAxisFractionLeft;
+    case DateTimeElement.minute:
+      return 0.0;
+    case DateTimeElement.second:
+      return pickerAxisFractionSeconds;
+    default:
+      assert(false, 'AxisFraction for ${element.toString()}');
+      throw FlutterError('AxisFraction for ${element.toString()}');
   }
 }
 

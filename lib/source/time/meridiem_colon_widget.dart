@@ -20,7 +20,7 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
   @override
   void initState() {
     super.initState();
-    dateTimeCubit = DateTimeCubit.instance();
+    dateTimeCubit = DateTimeCubit.instance()!;
     final int firstIndex = (widget.timeSeparators == K.TimeSeparator.colon) ? K.colonIndex : dateTimeCubit.initialMeridiemIndexValue();
     scrollController = FixedExtentScrollController(initialItem: firstIndex);
   }
@@ -41,12 +41,15 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
   @override
   Widget build(BuildContext context) {
     final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
+    bool isSeperatorAColon = widget.timeSeparators == K.TimeSeparator.colon;
+    final offAxisFraction = isSeperatorAColon ? 0.0 : K.pickerAxisFractionRight;
     return Container(
       color: K.pickerBackgroundColor(brightness, DateTimeElement.hour),
       height: K.heightPicker,
-      width: widget.timeSeparators == K.TimeSeparator.colon ? K.widthColon : K.widthMeridiem,
+      width: isSeperatorAColon ? K.widthColon : K.widthMeridiem,
       child: Center(
         child: ListWheelScrollView.useDelegate(
+          offAxisFraction: offAxisFraction,
           itemExtent: K.pickerExtent,
           physics: FixedExtentScrollPhysics(),
           controller: scrollController,
