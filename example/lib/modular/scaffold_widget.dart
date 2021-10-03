@@ -67,6 +67,21 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
               });
             },
           ),
+          SizedBox(height: 30),
+          DateTimePopoverPicker(
+            key: UniqueKey(),
+            brightness: Brightness.dark,
+            includeSeconds: false,
+            initalDateTime: DateTime.now().add(Duration(days: 129)),
+            onWidget: Text('Select secondless dark date', style: TextStyle(fontSize: 28.0)),
+            callback: (newDateTime) {
+              Future.delayed(Duration(milliseconds: 250), () {
+                setState(() {
+                  _buttonText = '${newDateTime.toString()}';
+                });
+              });
+            },
+          ),
         ],
       ),
     );

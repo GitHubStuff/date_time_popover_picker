@@ -13,19 +13,16 @@ part 'date_time_state.dart';
 class DateTimeCubit extends Cubit<DateTimeState> {
   static DateTimeCubit? _instance;
   DateTimeCubit._internal(DateTime dateTime) : super(DateTimeInitial(dateTime: dateTime));
-  factory DateTimeCubit(DateTime initialDateTime, bool includeSeconds, Brightness brightness) {
-    _instance = DateTimeCubit._internal(initialDateTime);
-    _instance!._dateTime = initialDateTime.round(includeSeconds ? DateTimeElement.second : DateTimeElement.minute);
-    _instance!._showSeconds = includeSeconds;
-    _instance!._brightness = brightness;
+  factory DateTimeCubit(DateTime initialDateTime, bool includeSeconds) {
+    _instance = DateTimeCubit._internal(initialDateTime.round(includeSeconds ? DateTimeElement.second : DateTimeElement.minute));
     return _instance!;
   }
   //factory DateTimeCubit.instance() => _instance;
   static DateTimeCubit? instance() => _instance;
 
-  late DateTime _dateTime;
-  late bool _showSeconds;
-  late Brightness _brightness;
+  DateTime _dateTime = DateTime(200);
+  bool _showSeconds = true;
+  Brightness _brightness = Brightness.dark;
 
   DateTime get dateTime => _dateTime;
   set dateTime(DateTime newDateTime) => _dateTime = newDateTime.round(

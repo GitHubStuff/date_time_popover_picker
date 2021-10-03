@@ -37,8 +37,8 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
   @override
   void initState() {
     super.initState();
-    final dateTime = widget.initalDateTime ?? DateTime.now().toLocal();
-    DateTimeCubit(dateTime, widget.includeSeconds, widget.brightness);
+    final dateTime = (widget.initalDateTime ?? DateTime.now().toLocal()).round(widget.includeSeconds ? DateTimeElement.second : DateTimeElement.minute);
+    DateTimeCubit(dateTime, widget.includeSeconds);
   }
 
   @override
@@ -49,7 +49,6 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
     return BlocBuilder<DateTimeCubit, DateTimeState>(
       bloc: DateTimeCubit.instance(),
       builder: (context, state) {
-        debugPrint('STATE: ${state.toString()}');
         if (state is PickerSelectedDateTimeState) {
           widget.callback(state.dateTime);
           Navigator.of(context).pop();
@@ -58,7 +57,9 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
           child: widget.onWidget,
           onTap: () {
             final dtc = DateTimeCubit.instance()!;
-            final dateTime = widget.initalDateTime ?? DateTime.now().toLocal();
+            /// The order (showSeconds, dateTime, brightness) should never be changed
+            dtc.showSeconds = widget.includeSeconds;
+            final dateTime = (widget.initalDateTime ?? DateTime.now().toLocal()).round(widget.includeSeconds ? DateTimeElement.second : DateTimeElement.minute);
             dtc.dateTime = dateTime;
             dtc.brightness = widget.brightness;
             showPopover(
