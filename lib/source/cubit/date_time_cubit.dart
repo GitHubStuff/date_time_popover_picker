@@ -13,10 +13,11 @@ part 'date_time_state.dart';
 class DateTimeCubit extends Cubit<DateTimeState> {
   static DateTimeCubit? _instance;
   DateTimeCubit._internal(DateTime dateTime) : super(DateTimeInitial(dateTime: dateTime));
-  factory DateTimeCubit(DateTime initialDateTime, bool includeSeconds) {
+  factory DateTimeCubit(DateTime initialDateTime, bool includeSeconds, Brightness brightness) {
     _instance = DateTimeCubit._internal(initialDateTime);
     _instance!._dateTime = initialDateTime.round(includeSeconds ? DateTimeElement.second : DateTimeElement.minute);
     _instance!._showSeconds = includeSeconds;
+    _instance!._brightness = brightness;
     return _instance!;
   }
   //factory DateTimeCubit.instance() => _instance;
@@ -24,6 +25,7 @@ class DateTimeCubit extends Cubit<DateTimeState> {
 
   late DateTime _dateTime;
   late bool _showSeconds;
+  late Brightness _brightness;
 
   DateTime get dateTime => _dateTime;
   set dateTime(DateTime newDateTime) => _dateTime = newDateTime.round(
@@ -34,6 +36,11 @@ class DateTimeCubit extends Cubit<DateTimeState> {
     _showSeconds = newValue;
     _dateTime = _dateTime.round(newValue ? DateTimeElement.second : DateTimeElement.minute);
   }
+
+  // ignore: unnecessary_getters_setters
+  Brightness get brightness => _brightness;
+  // ignore: unnecessary_getters_setters
+  set brightness(Brightness newBrightness) => _brightness = newBrightness;
 
   void returnDateTime() => emit(PickerSelectedDateTimeState(_dateTime));
 

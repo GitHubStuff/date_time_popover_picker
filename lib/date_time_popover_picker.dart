@@ -12,11 +12,13 @@ import 'source/widgets/date_time_picker_widget.dart';
 
 typedef void PickerCallback(DateTime dateTime);
 
+/// This is the GATEWAY to the Date/Time Picker
 class DateTimePopoverPicker extends StatefulWidget {
   final Widget onWidget;
   final DateTime? initalDateTime;
   final PickerCallback callback;
   final bool includeSeconds;
+  final Brightness brightness;
 
   DateTimePopoverPicker({
     Key? key,
@@ -24,6 +26,7 @@ class DateTimePopoverPicker extends StatefulWidget {
     required this.callback,
     this.initalDateTime,
     this.includeSeconds = true,
+    this.brightness = Brightness.light,
   }) : super(key: key);
 
   @override
@@ -35,10 +38,7 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
   void initState() {
     super.initState();
     final dateTime = widget.initalDateTime ?? DateTime.now().toLocal();
-    DateTimeCubit(
-      dateTime,
-      widget.includeSeconds,
-    );
+    DateTimeCubit(dateTime, widget.includeSeconds, widget.brightness);
   }
 
   @override
@@ -49,6 +49,7 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
     return BlocBuilder<DateTimeCubit, DateTimeState>(
       bloc: DateTimeCubit.instance(),
       builder: (context, state) {
+        debugPrint('STATE: ${state.toString()}');
         if (state is PickerSelectedDateTimeState) {
           widget.callback(state.dateTime);
           Navigator.of(context).pop();
@@ -56,8 +57,12 @@ class _DateTimePopoverPicker extends ObservingStatefulWidget<DateTimePopoverPick
         return GestureDetector(
           child: widget.onWidget,
           onTap: () {
+            final dtc = DateTimeCubit.instance()!;
+            final dateTime = widget.initalDateTime ?? DateTime.now().toLocal();
+            dtc.dateTime = dateTime;
+            dtc.brightness = widget.brightness;
             showPopover(
-              backgroundColor: K.defaultPreviewBackgroundColors.of(context),
+              backgroundColor: K.defaultPreviewBackgroundColors.bright(widget.brightness),
               context: context,
               bodyBuilder: (context) => _picker(),
               onPop: () {},

@@ -1,7 +1,6 @@
 // Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:theme_manager/theme_manager.dart';
 
 import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
@@ -40,7 +39,7 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
 
   @override
   Widget build(BuildContext context) {
-    final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
+    final Brightness brightness = DateTimeCubit.instance()!.brightness;
     bool isSeperatorAColon = widget.timeSeparators == K.TimeSeparator.colon;
     final offAxisFraction = isSeperatorAColon ? 0.0 : K.pickerAxisFractionRight;
     return Container(
@@ -55,9 +54,10 @@ class _MeridiemColonWidget extends ObservingStatefulWidget<MeridiemColonWidget> 
           controller: scrollController,
           childDelegate: ListWheelChildBuilderDelegate(
             builder: (context, int index) {
+              final brightness = DateTimeCubit.instance()!.brightness;
               return widget.timeSeparators == K.TimeSeparator.colon
-                  ? K.pickerWidget(context: context, atIndex: index, forElement: null, dateTime: null)
-                  : K.merdianWidget(context: context, atIndex: index);
+                  ? K.pickerWidget(brightness: brightness, atIndex: index, forElement: null, dateTime: null)
+                  : K.merdianWidget(brightness: brightness, atIndex: index);
             },
           ),
         ),

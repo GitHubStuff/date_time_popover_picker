@@ -16,7 +16,7 @@ class DateTimePickerStackWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final dtc = DateTimeCubit.instance();
     Widget pickerWidget = DatePickerWidget(pickerCallback: pickerCallback, key: UniqueKey());
-    Color backgroundColor = K.defaultDateBackgroundColors.of(context);
+    Color backgroundColor = K.defaultDateBackgroundColors.bright(dtc!.brightness);
     return BlocBuilder<DateTimeCubit, DateTimeState>(
         bloc: dtc,
         builder: (context, state) {
@@ -24,14 +24,14 @@ class DateTimePickerStackWidget extends StatelessWidget {
             switch (state.dateTimeItem) {
               case K.DateTimeItem.date:
                 pickerWidget = DatePickerWidget(pickerCallback: pickerCallback);
-                backgroundColor = K.defaultDateBackgroundColors.of(context);
+                backgroundColor = K.defaultDateBackgroundColors.bright(dtc.brightness);
                 break;
               case K.DateTimeItem.time:
                 pickerWidget = TimePickerWidget(
                   pickerCallback: pickerCallback,
-                  includeSeconds: dtc!.showSeconds,
+                  includeSeconds: dtc.showSeconds,
                 );
-                backgroundColor = K.defaultTimeBackgroundColors.of(context);
+                backgroundColor = K.defaultTimeBackgroundColors.bright(dtc.brightness);
             }
           }
           return Container(

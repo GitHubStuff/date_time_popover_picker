@@ -1,7 +1,6 @@
 // Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/flutter_classes.dart';
-import 'package:theme_manager/theme_manager.dart';
 
 import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
@@ -35,7 +34,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
       childDelegate: ListWheelChildBuilderDelegate(
         builder: (context, int index) {
           return K.pickerWidget(
-            context: context,
+            brightness: dateTimeCubit.brightness,
             atIndex: index,
             forElement: widget.element,
             dateTime: dateTimeCubit.dateTime,
@@ -61,7 +60,7 @@ class _PickerWidget extends ObservingStatefulWidget<PickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
+    final Brightness brightness = DateTimeCubit.instance()!.brightness;
     return Container(
       color: K.pickerBackgroundColor(brightness, widget.element),
       height: K.heightPicker,

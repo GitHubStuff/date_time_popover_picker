@@ -10,10 +10,10 @@ import '../constants.dart' as K;
 class DateTimePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final dtc = DateTimeCubit.instance();
+    final dtc = DateTimeCubit.instance()!;
     UniqueKey dateKey = UniqueKey();
     UniqueKey timeKey = UniqueKey();
-    TextStyle style = K.previewTextStyle(context);
+    TextStyle style = K.previewTextStyle(dtc.brightness);
     return BlocBuilder<DateTimeCubit, DateTimeState>(
       bloc: dtc,
       builder: (context, state) {
@@ -38,14 +38,14 @@ class DateTimePreview extends StatelessWidget {
         Widget previewTextWidget = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(dtc!.dateText, style: style, key: dateKey),
+            Text(dtc.dateText, style: style, key: dateKey),
             Text(dtc.timeText, style: style, key: timeKey),
           ],
         );
         return Container(
           width: K.totalPopoverHeight,
           height: K.previewHeight,
-          color: K.defaultPreviewBackgroundColors.of(context),
+          color: K.defaultPreviewBackgroundColors.bright(dtc.brightness),
           child: Padding(
             padding: K.previewInsets,
             child: Row(

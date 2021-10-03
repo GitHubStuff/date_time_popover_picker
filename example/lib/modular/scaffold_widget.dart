@@ -40,9 +40,25 @@ class _ScaffoldWidget extends State<ScaffoldWidget> {
         children: <Widget>[
           Text(AppLocalizations.of(context)!.helloWorld), //Example of localization
           Text(_buttonText),
+          SizedBox(height: 30),
           DateTimePopoverPicker(
             key: UniqueKey(),
-            onWidget: Text('Select a date', style: TextStyle(fontSize: 24.0)),
+            brightness: Brightness.light,
+            onWidget: Text('Select a bright date', style: TextStyle(fontSize: 28.0)),
+            callback: (newDateTime) {
+              Future.delayed(Duration(milliseconds: 250), () {
+                setState(() {
+                  _buttonText = '${newDateTime.toString()}';
+                });
+              });
+            },
+          ),
+          SizedBox(height: 30),
+          DateTimePopoverPicker(
+            key: UniqueKey(),
+            brightness: Brightness.dark,
+            initalDateTime: DateTime.now().add(Duration(days: 33)),
+            onWidget: Text('Select a dark date', style: TextStyle(fontSize: 28.0)),
             callback: (newDateTime) {
               Future.delayed(Duration(milliseconds: 250), () {
                 setState(() {

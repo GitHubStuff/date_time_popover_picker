@@ -17,7 +17,7 @@ const String dateColors = 'com.icodeforyou.com.dateColors';
 const defaultPickerElementWidth = 48.0;
 const fontSize = 20.0;
 const heightPicker = pickerExtent * 5.0;
-const listWheelScrollViewMagnification = 1.25;
+const listWheelScrollViewMagnification = 1.20;
 const meridiemAmIndex = 0;
 const meridiemPmIndex = 1;
 const midnightHour = 0;
@@ -84,8 +84,8 @@ ThemeColors defaultTimeBackgroundColors = ThemeColors(
   dark: Color(0xff334e68),
   light: Colors.blueGrey.shade200,
 );
-Widget? merdianWidget({required BuildContext context, required int atIndex}) {
-  return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'), context);
+Widget? merdianWidget({required Brightness brightness, required int atIndex}) {
+  return (atIndex < 0 || atIndex > 1) ? null : _textWidget(DateTime(2000, 1, 1, atIndex == 0 ? 0 : 12).shortTime('a'), brightness);
 }
 
 Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
@@ -105,7 +105,7 @@ Color pickerBackgroundColor(Brightness brightness, DateTimeElement? element) {
 }
 
 Widget? pickerWidget({
-  required BuildContext context,
+  required Brightness brightness,
   required int atIndex,
   required DateTimeElement? forElement,
   DateTime? dateTime,
@@ -113,7 +113,7 @@ Widget? pickerWidget({
   if (atIndex < 0) return null;
   if (forElement == null) {
     if (atIndex > 0) return null;
-    return _textWidget(':', context);
+    return _textWidget(':', brightness);
   }
   late String text;
   switch (forElement) {
@@ -143,7 +143,7 @@ Widget? pickerWidget({
     default:
       throw FlutterError('No widget for ${forElement.toString()}');
   }
-  return _textWidget(text, context);
+  return _textWidget(text, brightness);
 }
 
 double pickerWidth(DateTimeElement element) {
@@ -186,16 +186,16 @@ double pickerOffAxisFraction(DateTimeElement? element) {
   }
 }
 
-TextStyle previewTextStyle(BuildContext context) => TextStyle(
+TextStyle previewTextStyle(Brightness brightness) => TextStyle(
       fontSize: 16.0,
-      color: defaultPreviewTextColors.of(context),
+      color: defaultPreviewTextColors.bright(brightness),
     );
 
-TextStyle setButtonStyle(BuildContext context) => TextStyle(fontSize: 18.0, color: defaultSetButtonTextColors.of(context));
+TextStyle setButtonStyle(Brightness brightness) => TextStyle(fontSize: 18.0, color: defaultSetButtonTextColors.bright(brightness));
 
-Widget _textWidget(String text, BuildContext context) => Text(text,
+Widget _textWidget(String text, Brightness brightness) => Text(text,
     style: TextStyle(
-      color: defaultSetButtonTextColors.of(context),
+      color: defaultSetButtonTextColors.bright(brightness),
     ));
 
 enum DateTimeItem {

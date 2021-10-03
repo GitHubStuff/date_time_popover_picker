@@ -1,7 +1,6 @@
 // Copyright 2021, LTMM LLC.
 import 'package:flutter/material.dart';
 import 'package:flutter_classes/source/extensions/date_time_extensions.dart';
-import 'package:theme_manager/theme_manager.dart';
 
 import '../../source/cubit/date_time_cubit.dart';
 import '../constants.dart' as K;
@@ -9,10 +8,10 @@ import '../constants.dart' as K;
 class DateTimeToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Brightness brightness = ThemeManager.themeMode.asBrightness(context: context);
+    final Brightness brightness = DateTimeCubit.instance()!.brightness;
     final Color dateColor = K.pickerBackgroundColor(brightness, DateTimeElement.year);
     final Color timeColor = K.pickerBackgroundColor(brightness, DateTimeElement.hour);
-    final Color textColor = K.defaultTextBackgroundColors.of(context);
+    final Color textColor = K.defaultTextBackgroundColors.bright(brightness);
     return Container(
       width: K.totalPopoverHeight,
       height: K.toggleButtonHeight,

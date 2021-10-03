@@ -7,6 +7,7 @@ import '../constants.dart' as K;
 class SetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final brightness = DateTimeCubit.instance()!.brightness;
     return InkWell(
       onTap: () {
         DateTimeCubit.instance()?.returnDateTime();
@@ -15,14 +16,14 @@ class SetButton extends StatelessWidget {
         height: K.setButtonHeight,
         width: K.setButtonWidth,
         decoration: BoxDecoration(
-          color: K.defaultSetButtonBackgroundColors.of(context),
-          border: Border.all(color: K.defaultSetButtonBorderColors.of(context), width: K.setButtonBorder),
+          color: K.defaultSetButtonBackgroundColors.bright(brightness),
+          border: Border.all(color: K.defaultSetButtonBorderColors.bright(brightness), width: K.setButtonBorder),
           borderRadius: new BorderRadius.circular(K.setButtonRadius),
         ),
         child: Center(
           child: Text(
             K.setText,
-            style: K.setButtonStyle(context),
+            style: K.setButtonStyle(brightness),
           ),
         ),
       ),
